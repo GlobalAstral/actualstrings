@@ -65,3 +65,17 @@ AS_Result ds_append(DynamicString* ds, const char* str) {
 
   return AS_SUCCESS;
 }
+
+Slice trim(Slice s) {
+  size_t start = 0;
+  size_t end = s.length;
+
+  while (start < end && isspace((unsigned char)s.bytes[start]))
+    start++;
+
+  while (end > start && isspace((unsigned char)s.bytes[end - 1]))
+    end--;
+
+  Slice out = { s.bytes + start, end - start };
+  return out;
+}
