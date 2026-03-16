@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define str_of_dyn(dynptr) (dynptr->__internal)
+#define str_of_dyn(dynptr) ((dynptr)->__internal)
 
 #define long long long
 
