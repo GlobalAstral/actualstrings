@@ -3,15 +3,18 @@
 #define long long long
 #define BASE_CAP 64
 #define ceildiv(a, b) (((a) + (b) - 1) / (b))
-#define INTEGRITY_FLAG 0xFEEBDAEDEBABEFACCAFEBABEDEADBEEF
+#define INTEGRITY_FLAG 0xCAFEBABEDEADBEEF
 
 DynamicString ds_from(char* init) {
   size_t sz = strlen(init);
   size_t needed_cap = ceildiv(sz - 1, BASE_CAP);
+  char* buf = (char*)malloc(needed_cap*sizeof(char));
+  memcpy(buf, init, sz);
+  buf[sz] = 0;
   return (DynamicString) {
     .__capacity = needed_cap,
     .length = sz,
-    .__internal = (char*)malloc(needed_cap*sizeof(char)),
+    .__internal = buf,
     .__integrity = INTEGRITY_FLAG,
   };
 }
