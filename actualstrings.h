@@ -3,19 +3,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 
-#define str_of_dyn(dynptr) (dynptr->__internal)
+#define str_of_dyn(dynptr) ((dynptr)->__internal)
 
 #define long long long
 
-typedef enum Result {
+typedef enum AS_Result {
   AS_SUCCESS,
   AS_NOT_SANE,
   AS_CANNOT_ALLOCATE,
   AS_OUT_OF_BOUNDS,
   AS_EMPTY,
   AS_BAD_ARG,
-} Result;
+} AS_Result;
 
 typedef struct DynamicString {
   char* __internal;
@@ -27,7 +28,14 @@ typedef struct DynamicString {
 DynamicString ds_from(char* init);
 DynamicString ds_new();
 bool check_ds(DynamicString* ds);
-Result ds_reserve(DynamicString* ds, size_t size);
-Result ds_append(DynamicString* ds, const char* str);
+AS_Result ds_reserve(DynamicString* ds, size_t size);
+AS_Result ds_append(DynamicString* ds, const char* str);
+
+typedef struct Slice {
+  char* bytes;
+  size_t length;
+} Slice;
+
+Slice trim(Slice s);
 
 #undef long
