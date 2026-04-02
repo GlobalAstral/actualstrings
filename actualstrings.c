@@ -3,7 +3,7 @@
 #define long long long
 #define BASE_CAP 64
 #define ceildiv(a, b) (((a) + (b) - 1) / (b))
-#define INTEGRITY_FLAG 0xCAFEBABEDEADBEEFFEEBDAEDEBABEFAC
+#define INTEGRITY_FLAG 0xCAFEBABEDEADBEEF
 
 DynamicString ds_from(char* init) {
   size_t sz = strlen(init);
