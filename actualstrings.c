@@ -69,6 +69,33 @@ AS_Result ds_append(DynamicString* ds, const char* str) {
   return AS_SUCCESS;
 }
 
+AS_Result ds_insert(DynamicString* ds, size_t index, const char* str) {
+  if (!check_ds(ds)) {
+    return AS_NOT_SANE;
+  }
+  if (str == NULL) {
+    return AS_BAD_ARG;
+  }
+  if (index > ds->length) {
+    return AS_OUT_OF_BOUNDS;
+  }
+  size_t size = strlen(str);
+  if (ds->length + size + 1 > ds->__capacity) {
+    size_t factor = 2;
+    while (ds->length + size + 1 > factor * ds->__capacity) {
+      factor *= 2;
+    }
+    AS_Result r = ds_reserve(ds, factor * ds->__capacity);
+    if (r) {
+      return r;
+    }
+  }
+  memmove(ds->__internal + index + size, ds->__internal + index, ds->length - index + 1);
+  memmove(ds->__internal + index, str, size);
+  ds->length += size;
+  return AS_SUCCESS;
+}
+
 Slice trim(Slice s) {
   size_t start = 0;
   size_t end = s.length;

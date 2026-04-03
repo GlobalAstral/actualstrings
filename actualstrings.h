@@ -30,6 +30,7 @@ DynamicString ds_new();
 bool check_ds(DynamicString* ds);
 AS_Result ds_reserve(DynamicString* ds, size_t size);
 AS_Result ds_append(DynamicString* ds, const char* str);
+AS_Result ds_insert(DynamicString* ds, size_t index, const char* str);
 
 typedef struct Slice {
   char* bytes;
