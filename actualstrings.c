@@ -82,3 +82,29 @@ Slice trim(Slice s) {
   Slice out = { s.bytes + start, end - start };
   return out;
 }
+
+size_t split(DynamicString* ds, char sep, Slice** buffer) {
+  size_t token_amount = 1;
+  for (size_t i = 0; i < ds->length; i++) {
+    if (str_of_dyn(ds)[i] == sep) {
+      token_amount++;
+    }
+  }
+  *buffer = (Slice*)malloc(token_amount * sizeof(Slice));
+
+  char* str = str_of_dyn(ds);
+
+  size_t base = 0;
+  size_t slice_index = 0;
+  for (size_t i = 0; i < ds->length; i++) {
+    char ch = str[i];
+    if (ch == sep) {
+      Slice sl = {.bytes = str + base, .length = i - base};
+      base = i + 1;
+      (*buffer)[slice_index++] = sl;
+    }
+  }
+  Slice sl = {.bytes = str + base, .length = ds->length - base};
+  (*buffer)[slice_index++] = sl;
+  return slice_index;
+}

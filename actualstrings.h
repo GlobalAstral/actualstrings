@@ -37,5 +37,6 @@ typedef struct Slice {
 } Slice;
 
 Slice trim(Slice s);
+size_t split(DynamicString* ds, char sep, Slice** buffer);
 
 #undef long
