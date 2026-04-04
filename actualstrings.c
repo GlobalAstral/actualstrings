@@ -76,6 +76,9 @@ AS_Result ds_insert(DynamicString* ds, size_t index, const char* str) {
   if (str == NULL) {
     return AS_BAD_ARG;
   }
+  if (index == ds->length) {
+    return ds_append(ds, str);
+  }
   if (index > ds->length) {
     return AS_OUT_OF_BOUNDS;
   }
