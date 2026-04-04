@@ -7,7 +7,7 @@
 
 DynamicString ds_from(char* init) {
   size_t sz = strlen(init);
-  size_t needed_cap = ceildiv(sz - 1, BASE_CAP);
+  size_t needed_cap = ceildiv(sz, BASE_CAP) * BASE_CAP;
   char* buf = (char*)malloc(needed_cap*sizeof(char));
   memcpy(buf, init, sz);
   buf[sz] = 0;
